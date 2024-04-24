@@ -24,14 +24,16 @@ const createCustomer = async () => {
     
     const customer = await Customer.create(customerData);
 
-    console.log("New customer:", customer);
+    console.log(`-- New customer: Name: ${customer.name}; Age: ${customer.age}; id: ${customer._id}`);
 };
 
 const findCustomers = async () => {
     
     const customers = await Customer.find({});
     
-    console.log("All customers:", customers);
+    customers.forEach(customer => {
+        console.log(`-- Name: ${customer.name}; Age: ${customer.age}; id: ${customer._id}`);
+    })
 };
 
 const updateCustomer = async () => {
@@ -51,7 +53,7 @@ const updateCustomer = async () => {
         { new: true }
     );
 
-    console.log("Updated Customer:", updatedCustomer);
+    console.log(`-- Updated Customer: Name: ${updatedCustomer.name}; Age: ${updatedCustomer.age}; id: ${updatedCustomer._id}`);
 };
 
 const deleteCustomer = async () => {
@@ -62,7 +64,7 @@ const deleteCustomer = async () => {
 
     const removedCustomer = await Customer.findByIdAndDelete(customerId);
 
-    console.log('Removed customer:', removedCustomer)
+    console.log(`-- Removed customer: Name: ${removedCustomer.name}; Age: ${removedCustomer.age}; id: ${removedCustomer._id}`)
 }
 
 
