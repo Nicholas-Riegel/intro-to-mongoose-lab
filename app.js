@@ -64,7 +64,7 @@ const updateCustomer = async () => {
     console.clear()
     console.log("Updated customer:");
     console.log('===========================================');
-        console.log(`id: ${updatedCustomer._id} -- Name: ${updatedCustomer.name}, Age: ${updatedCustomer.age}`);
+    console.log(`id: ${updatedCustomer._id} -- Name: ${updatedCustomer.name}, Age: ${updatedCustomer.age}`);
     console.log('===========================================');
 };
 
@@ -99,8 +99,6 @@ const disconnect = async () => {
 
     process.exit();
 }
-
-
 
 const app = async () => {
 
