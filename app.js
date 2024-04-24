@@ -24,16 +24,24 @@ const createCustomer = async () => {
     
     const customer = await Customer.create(customerData);
 
-    console.log(`-- New customer: Name: ${customer.name}; Age: ${customer.age}; id: ${customer._id}`);
+    console.clear()
+    console.log("New customer:");
+    console.log('===========================================');
+    console.log(`id: ${customer._id} -- Name: ${customer.name}, Age: ${customer.age}`);
+    console.log('===========================================');
 };
 
 const findCustomers = async () => {
     
     const customers = await Customer.find({});
     
+    console.clear()
+    console.log("All customers:");
+    console.log('===========================================');
     customers.forEach(customer => {
-        console.log(`-- Name: ${customer.name}; Age: ${customer.age}; id: ${customer._id}`);
+        console.log(`id: ${customer._id} -- Name: ${customer.name}, Age: ${customer.age}`);
     })
+    console.log('===========================================');
 };
 
 const updateCustomer = async () => {
@@ -53,7 +61,11 @@ const updateCustomer = async () => {
         { new: true }
     );
 
-    console.log(`-- Updated Customer: Name: ${updatedCustomer.name}; Age: ${updatedCustomer.age}; id: ${updatedCustomer._id}`);
+    console.clear()
+    console.log("Updated customer:");
+    console.log('===========================================');
+        console.log(`id: ${updatedCustomer._id} -- Name: ${updatedCustomer.name}, Age: ${updatedCustomer.age}`);
+    console.log('===========================================');
 };
 
 const deleteCustomer = async () => {
@@ -63,8 +75,12 @@ const deleteCustomer = async () => {
     customerId = prompt("Please enter the id of the customer you want to delete from the list above: ")
 
     const removedCustomer = await Customer.findByIdAndDelete(customerId);
-
-    console.log(`-- Removed customer: Name: ${removedCustomer.name}; Age: ${removedCustomer.age}; id: ${removedCustomer._id}`)
+    
+    console.clear()
+    console.log("Removed customer:");
+    console.log('===========================================');
+    console.log(`id: ${removedCustomer._id} -- Name: ${removedCustomer.name}, Age: ${removedCustomer.age}`);
+    console.log('===========================================');
 }
 
 
@@ -88,11 +104,15 @@ const disconnect = async () => {
 
 const app = async () => {
 
-    await connect()
+    console.clear()
+
+    connect()
+
+    console.log("Welcome to the raddest CRM ever!");
 
     while(appRunning){
 
-        console.log("Welcome to the CRM\nWhat would you like to do?\n1. Create a customer\n2. View all customers\n3. Update a customer\n4. Delete a customer\n5. Quit");
+        console.log("What would you like to do?\n1. Create a customer\n2. View all customers\n3. Update a customer\n4. Delete a customer\n5. Quit");
         
         const userAnswer = prompt("Number of action to run: ");
         
