@@ -23,15 +23,6 @@ const createCustomer = async () => {
     console.log("New customer:", customer);
 };
 
-
-
-
-const findCustomer = async () => {
-    const id = ''
-    const customer = await Customer.findById(id);
-    console.log("The customer:", customer);
-};
-
 const findCustomers = async () => {
     
     const customers = await Customer.find({});
