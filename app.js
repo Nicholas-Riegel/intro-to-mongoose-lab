@@ -2,17 +2,21 @@ const prompt = require('prompt-sync')();
 const dotenv = require('dotenv');
 dotenv.config();
 const mongoose = require('mongoose');
+
 const Customer = require('./models/customer.js');
 
-console.log("Welcome to the CRM\nWhat would you like to do?\n1. Create a customer\n2. View all customers\n3. Update a customer\n4. Delete a customer\n5. quit");
-const userAnswer = prompt("Number of action to run: ");
+let appRunning = true;
 
 let customerName = null;
 let customerAge = null;
+let customerId = null;
 
 const createCustomer = async () => {
+
     customerName = prompt("Please enter the customer's name: ")
+
     customerAge = prompt("Please enter the customer's age: ")
+
     const customerData = {
       name: customerName,
       age: customerAge,
@@ -31,10 +35,13 @@ const findCustomers = async () => {
 };
 
 const updateCustomer = async () => {
+
     await findCustomers();
+
     customerId = prompt("Please enter the id of the customer you want to update from the list above: ")
     customerName = prompt("Please enter the customer's new name: ")
     customerAge = prompt("Please enter the customer's new age: ")
+
     const updatedCustomer = await Customer.findByIdAndUpdate(
         customerId,
         { 
@@ -43,36 +50,64 @@ const updateCustomer = async () => {
         },
         { new: true }
     );
+
     console.log("Updated Customer:", updatedCustomer);
 };
 
 const deleteCustomer = async () => {
+
     await findCustomers();
+
     customerId = prompt("Please enter the id of the customer you want to delete from the list above: ")
+
     const removedCustomer = await Customer.findByIdAndDelete(customerId);
+
     console.log('Removed customer:', removedCustomer)
 }
 
 
-const connect = async (query) => {
+const connect = async () => {
+
     await mongoose.connect(process.env.MONGODB_URI);
-    console.log('Connected to MongoDB');
-    await query()
-    await mongoose.disconnect();
-    console.log('Disconnected from MongoDB');
-    process.exit();
+
+    // console.log('Connected to MongoDB');
 };
 
-let customerId = null;
+const disconnect = async () => {
 
-if ( parseInt(userAnswer) === 1){    
-    connect(createCustomer)
-} else if (parseInt(userAnswer) === 2){
-    connect(findCustomers)
-} else if (parseInt(userAnswer) === 3){
-    connect(updateCustomer)
-} else if (parseInt(userAnswer) === 4){
-    connect(deleteCustomer)
-} else if (parseInt(userAnswer) === 5){
-    console.log("Bye!");
+    await mongoose.disconnect();
+
+    console.log('Disconnected from MongoDB\nBye!');
+
+    process.exit();
 }
+
+
+
+const app = async () => {
+
+    await connect()
+
+    while(appRunning){
+
+        console.log("Welcome to the CRM\nWhat would you like to do?\n1. Create a customer\n2. View all customers\n3. Update a customer\n4. Delete a customer\n5. Quit");
+        
+        const userAnswer = prompt("Number of action to run: ");
+        
+        if ( parseInt(userAnswer) === 1){    
+            await createCustomer()
+        } else if (parseInt(userAnswer) === 2){
+            await findCustomers()
+        } else if (parseInt(userAnswer) === 3){
+            await updateCustomer()
+        } else if (parseInt(userAnswer) === 4){
+            await deleteCustomer()
+        } else if (parseInt(userAnswer) === 5){
+            await disconnect()
+            appRunning = false;
+        }
+    }
+}
+    
+
+app()
