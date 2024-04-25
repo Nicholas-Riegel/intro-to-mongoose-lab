@@ -88,7 +88,6 @@ const connect = async () => {
 
     await mongoose.connect(process.env.MONGODB_URI);
 
-    // console.log('Connected to MongoDB');
 };
 
 const disconnect = async () => {
@@ -114,15 +113,15 @@ const app = async () => {
         
         const userAnswer = prompt("Number of action to run: ");
         
-        if ( parseInt(userAnswer) === 1){    
+        if (userAnswer === '1'){    
             await createCustomer()
-        } else if (parseInt(userAnswer) === 2){
+        } else if (userAnswer === '2'){
             await findCustomers()
-        } else if (parseInt(userAnswer) === 3){
+        } else if (userAnswer === '3'){
             await updateCustomer()
-        } else if (parseInt(userAnswer) === 4){
+        } else if (userAnswer === '4'){
             await deleteCustomer()
-        } else if (parseInt(userAnswer) === 5){
+        } else if (userAnswer === '5'){
             await disconnect()
             appRunning = false;
         }
