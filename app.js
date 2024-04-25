@@ -44,15 +44,25 @@ const createCustomer = async () => {
 
 const findCustomers = async () => {
     
-    const customers = await Customer.find({});
+    try {
+
+        const customers = await Customer.find({});
+        
+        console.clear()
+        console.log("All customers:");
+        console.log('===========================================');
+        customers.forEach(customer => {
+            console.log(`id: ${customer._id} -- Name: ${customer.name}, Age: ${customer.age}`);
+        })
+        console.log('===========================================');
     
-    console.clear()
-    console.log("All customers:");
-    console.log('===========================================');
-    customers.forEach(customer => {
-        console.log(`id: ${customer._id} -- Name: ${customer.name}, Age: ${customer.age}`);
-    })
-    console.log('===========================================');
+    } catch (err){
+
+        console.clear()
+        console.log('===========================================');
+        console.log(`ERROR: ${err._message}`);
+        console.log('===========================================');
+    }
 };
 
 const updateCustomer = async () => {
