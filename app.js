@@ -11,6 +11,14 @@ let customerName = null;
 let customerAge = null;
 let customerId = null;
 
+const handleErrors = (err) => {
+
+    console.clear()
+    console.log('===========================================');
+    console.log(`ERROR: ${err._message}`);
+    console.log('===========================================');
+}
+
 const createCustomer = async () => {
 
     customerName = prompt("Please enter the customer's name: ")
@@ -34,10 +42,7 @@ const createCustomer = async () => {
 
     } catch (err){
 
-        console.clear()
-        console.log('===========================================');
-        console.log(`ERROR: ${err._message}`);
-        console.log('===========================================');
+        handleErrors(err)
     }
 
 };
@@ -58,10 +63,7 @@ const findCustomers = async () => {
     
     } catch (err){
 
-        console.clear()
-        console.log('===========================================');
-        console.log(`ERROR: ${err._message}`);
-        console.log('===========================================');
+        handleErrors(err)
     }
 };
 
@@ -92,10 +94,7 @@ const updateCustomer = async () => {
     
     } catch (err){
 
-        console.clear()
-        console.log('===========================================');
-        console.log(`ERROR: ${err._message}`);
-        console.log('===========================================');
+        handleErrors(err)
     }
 };
 
@@ -117,10 +116,7 @@ const deleteCustomer = async () => {
     
     } catch (err){
 
-        console.clear()
-        console.log('===========================================');
-        console.log(`ERROR: ${err._message}`);
-        console.log('===========================================');
+        handleErrors(err)
     }
 }
 
@@ -133,10 +129,7 @@ const connect = async () => {
     
     } catch (err){
 
-        console.clear()
-        console.log('===========================================');
-        console.log(`ERROR: ${err._message}`);
-        console.log('===========================================');
+        handleErrors(err)
     }
 
 };
@@ -153,10 +146,7 @@ const disconnect = async () => {
     
     }catch (err){
 
-        console.clear()
-        console.log('===========================================');
-        console.log(`ERROR: ${err._message}`);
-        console.log('===========================================');
+        handleErrors(err)
     }
 }
 
