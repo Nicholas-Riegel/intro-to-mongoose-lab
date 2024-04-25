@@ -22,13 +22,24 @@ const createCustomer = async () => {
       age: customerAge,
     };
     
-    const customer = await Customer.create(customerData);
+    try {
+        
+        const customer = await Customer.create(customerData);
+        
+        console.clear()
+        console.log("New customer:");
+        console.log('===========================================');
+        console.log(`id: ${customer._id} -- Name: ${customer.name}, Age: ${customer.age}`);
+        console.log('===========================================');
 
-    console.clear()
-    console.log("New customer:");
-    console.log('===========================================');
-    console.log(`id: ${customer._id} -- Name: ${customer.name}, Age: ${customer.age}`);
-    console.log('===========================================');
+    } catch (err){
+
+        console.clear()
+        console.log('===========================================');
+        console.log(`ERROR: ${err._message}`);
+        console.log('===========================================');
+    }
+
 };
 
 const findCustomers = async () => {
@@ -52,20 +63,30 @@ const updateCustomer = async () => {
     customerName = prompt("Please enter the customer's new name: ")
     customerAge = prompt("Please enter the customer's new age: ")
 
-    const updatedCustomer = await Customer.findByIdAndUpdate(
-        customerId,
-        { 
-            name: customerName,
-            age: customerAge  
-        },
-        { new: true }
-    );
+    try {
 
-    console.clear()
-    console.log("Updated customer:");
-    console.log('===========================================');
-    console.log(`id: ${updatedCustomer._id} -- Name: ${updatedCustomer.name}, Age: ${updatedCustomer.age}`);
-    console.log('===========================================');
+        const updatedCustomer = await Customer.findByIdAndUpdate(
+            customerId,
+            { 
+                name: customerName,
+                age: customerAge  
+            },
+            { new: true }
+        );
+        
+        console.clear()
+        console.log("Updated customer:");
+        console.log('===========================================');
+        console.log(`id: ${updatedCustomer._id} -- Name: ${updatedCustomer.name}, Age: ${updatedCustomer.age}`);
+        console.log('===========================================');
+    
+    } catch (err){
+
+        console.clear()
+        console.log('===========================================');
+        console.log(`ERROR: ${err._message}`);
+        console.log('===========================================');
+    }
 };
 
 const deleteCustomer = async () => {
@@ -74,29 +95,59 @@ const deleteCustomer = async () => {
 
     customerId = prompt("Please enter the id of the customer you want to delete from the list above: ")
 
-    const removedCustomer = await Customer.findByIdAndDelete(customerId);
+    try {
+
+        const removedCustomer = await Customer.findByIdAndDelete(customerId);
+        
+        console.clear()
+        console.log("Removed customer:");
+        console.log('===========================================');
+        console.log(`id: ${removedCustomer._id} -- Name: ${removedCustomer.name}, Age: ${removedCustomer.age}`);
+        console.log('===========================================');
     
-    console.clear()
-    console.log("Removed customer:");
-    console.log('===========================================');
-    console.log(`id: ${removedCustomer._id} -- Name: ${removedCustomer.name}, Age: ${removedCustomer.age}`);
-    console.log('===========================================');
+    } catch (err){
+
+        console.clear()
+        console.log('===========================================');
+        console.log(`ERROR: ${err._message}`);
+        console.log('===========================================');
+    }
 }
 
 
 const connect = async () => {
 
-    await mongoose.connect(process.env.MONGODB_URI);
+    try {
+
+        await mongoose.connect(process.env.MONGODB_URI);
+    
+    } catch (err){
+
+        console.clear()
+        console.log('===========================================');
+        console.log(`ERROR: ${err._message}`);
+        console.log('===========================================');
+    }
 
 };
 
 const disconnect = async () => {
 
-    await mongoose.disconnect();
+    try {
 
-    console.log('Disconnected from MongoDB\nBye!');
+        await mongoose.disconnect();
+        
+        console.log('Disconnected from MongoDB\nBye!');
+        
+        process.exit();
+    
+    }catch (err){
 
-    process.exit();
+        console.clear()
+        console.log('===========================================');
+        console.log(`ERROR: ${err._message}`);
+        console.log('===========================================');
+    }
 }
 
 const app = async () => {
